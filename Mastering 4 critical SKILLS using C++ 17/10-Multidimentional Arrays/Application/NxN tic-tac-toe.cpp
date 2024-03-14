@@ -24,6 +24,7 @@ int main(void)
     }
     bool End = false;
     char turn = 1;
+    int Draw = 0;
     while (!End)
     {
         int r,c;
@@ -32,17 +33,21 @@ int main(void)
         // Take & Check input validity
         while (!valid)
         {
+            //Check Draw
+            if (Draw == N*N)
+            {
+                cout << "Draw\n";
+                break;
+            }
             if (turn)
             {
                 player = 'x';
-                cout << "Player x trun. ";
             }
             else
             {
                 player = 'o';
-                cout << "Player o trun. ";
             }
-            cout << "Enter empty location (r , c)\n";
+            cout << "Player " << player <<" trun. Enter empty location (r , c)\n";
             cin >> r >> c;
             if (r >= 1 && r <= N && c >= 1 && c <= N)
             {
@@ -116,34 +121,12 @@ int main(void)
             if (stp_count == N)
             {
                 End = true;
-                if (turn)
-                {
-                    std::cout << "Play x win" << std::endl;
-                }
-                else
-                {
-                    std::cout << "Play o win" << std::endl;
-                }
+                cout << "Play "<<player<<" win" << endl;
                 break;
             }
         }
         //Check Draw
-        bool Draw = true;
-        for (int i = 0; i < N; i++)
-        {
-            for (int j = 0; j < N; j++)
-            {
-                if (arr[i] == 0)
-                {
-                    Draw = false;
-                    break;
-                }
-            }
-        }
-        if (Draw)
-        {
-            cout << "Draw\n";
-        }
+        Draw++;
         //Switch turn
         turn = (turn+1)%2;
     }
