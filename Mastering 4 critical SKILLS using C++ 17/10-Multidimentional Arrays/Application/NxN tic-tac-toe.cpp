@@ -7,9 +7,11 @@ int main(void)
     // taking array Dimentions
     char arr[9][9] = {0};
     int N = 0;
-    // All directions vertical , horizontal, diagonal right, diagonal left
-    int di[8] = { 0, 0, 1,-1, 1,-1, 1,-1};
-    int dj[8] = { 1,-1, 0, 0, 1,-1,-1, 1};
+    // All directions vertical , horizontal, diagonal right, diagonal left and starting array 
+    int di[4] = {1,0,1, 1};
+    int dj[4] = {0,1,1,-1};
+    int si[4] = {0,1,0,0};
+    int sj[4] = {1,0,0,N-1};
     while (true)
     {
         cin >> N;
@@ -28,7 +30,7 @@ int main(void)
     while (!End)
     {
         int r,c;
-        int player = 0;
+        char player = 0;
         bool valid = false;
         // Take & Check input validity
         while (!valid)
@@ -88,35 +90,16 @@ int main(void)
         for (int d = 0; d < 4; d++)
         {
             int stp_count = 0;
-            int currnt_i = r;
-            int currnt_j = c;
-            while (currnt_i < N && currnt_i >= 0 && currnt_j < N && currnt_j >= 0)
+            int current_i = si[d] * r;
+            int current_j = sj[d] * c;
+            for (int k = 0; k < N;k++)
             {
-                if (arr[r][c] == arr[currnt_i][currnt_j])
-                {
+                if (arr[current_i][current_j] == arr[r][c])
                     stp_count++;
-                }
                 else
-                {
                     break;
-                }
-                currnt_i = currnt_i + di[d];
-                currnt_j = currnt_j + dj[d];
-            }
-            currnt_i = r + di[2*d+1];
-            currnt_j = c + dj[2*d+1];
-            while (currnt_i < N && currnt_i >= 0 && currnt_j < N && currnt_j >= 0)
-            {
-                if (arr[r][c] == arr[currnt_i][currnt_j])
-                {
-                    stp_count++;
-                }
-                else
-                {
-                    break;
-                }
-                currnt_i = currnt_i + di[2*d+1];
-                currnt_j = currnt_j + dj[2*d+1];
+                current_i += di[d];
+                current_j += dj[d];
             }
             if (stp_count == N)
             {
