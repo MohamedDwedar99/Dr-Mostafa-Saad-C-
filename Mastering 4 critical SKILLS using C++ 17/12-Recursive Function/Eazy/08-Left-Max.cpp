@@ -6,16 +6,11 @@ void Left_max(int arr[],int len)
 {
     int max = arr[len-1];
     if (len == 1)
-    {
         return;
-    }
-    else
+    Left_max(arr,len-1);
+    if (arr[len-1] < arr[len-2])
     {
-        Left_max(arr,len-1);
-        if (arr[len-1] < arr[len-2])
-        {
-            arr[len-1] = arr[len-2];
-        }
+        arr[len-1] = arr[len-2];
     }
 }
 

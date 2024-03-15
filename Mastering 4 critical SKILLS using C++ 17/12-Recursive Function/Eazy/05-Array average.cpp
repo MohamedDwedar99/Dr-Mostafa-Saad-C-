@@ -6,13 +6,9 @@ double average(int arr[],int len)
 {
     int max = arr[len-1];
     if (len == 1)
-    {
         return arr[0];
-    }
-    else
-    {
-        return (arr[len-1] + average(arr,len-1)*(len-1))/len;
-    }
+    
+    return (arr[len-1] + average(arr,len-1)*(len-1))/len;
 }
 
 int main(void)
