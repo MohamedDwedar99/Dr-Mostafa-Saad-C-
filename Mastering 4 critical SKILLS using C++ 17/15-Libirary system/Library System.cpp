@@ -32,7 +32,7 @@ typedef struct book{
         borrow_name[borrowed] = name;
         borrowed++;
     }
-    void Retrun_Book(string name)
+    void Return_Book(string name)
     {
         int location;
         for (int i = 0; i < borrowed; i++)
@@ -124,7 +124,7 @@ typedef struct sys{
             cout << user[i].name << " Borrowed ";
             for (int j = 0; j < user[i].borrowed_Num; j++)
             {
-                cout << user[i].borrowed_name[i];
+                cout << user[i].borrowed_name[j];
             }
             cout << "\n";
         }
@@ -162,7 +162,7 @@ typedef struct sys{
         sort(book,book+book_num,name_comp);
         for (int i = 0; i < book_num; i++)
         {
-            cout << book[i].name <<" ";
+            cout << "id = " << book[i].id <<" name = "<<book[i].name <<" Total_quantity "<< book[i].quantity << " Total_borrowed " << book[i].borrowed<<endl;
         }
         cout << endl;
     }
@@ -171,21 +171,116 @@ typedef struct sys{
         sort(book,book+book_num,id_comp);
         for (int i = 0; i < book_num; i++)
         {
-            cout << book[i].name <<" ";
-        }
+            cout << "id = " << book[i].id <<" name = "<<book[i].name <<" Total_quantity "<< book[i].quantity << " Total_borrowed " << book[i].borrowed<<endl;        }
         cout << endl;
     }
     void User_Borrow_Book(void)
     {
-
+        bool flag_user = false;
+        bool flag_book = false;
+        int count_user = 0;
+        int count_book = 0;
+        string user_name, book_name;
+        cout << "Enter user name, book name: ";
+        cin >> user_name >> book_name;
+        for (int i = 0; i < user_num; i++)
+        {
+            if (user[i].name == user_name)
+            {
+                flag_user = true;
+                count_user = i;
+                break;
+            }
+        }
+        for (int i = 0; i < book_num; i++)
+        {
+            if (book[i].name == book_name)
+            {
+                flag_book = true;
+                count_book = i;
+                break;
+            }
+        }
+        if (flag_user && flag_book)
+        {
+            if (book[count_book].borrowed < book[count_book].quantity)
+            {
+                book[count_book].Borrow_Book(user_name);
+                user[count_user].Borrow_Book(book_name);
+            }
+            else
+            {
+                cout <<"No enough book\n";
+            }
+        }
+        if (!flag_user)
+        {
+            cout <<"User not found\n";
+        }
+        if (!flag_book)
+        {
+            cout <<"book not found\n";
+        }
     }
     void User_Return_Book(void)
     {
-        
+        bool flag_user = false;
+        bool flag_book = false;
+        int count_user = 0;
+        int count_book = 0;
+        string user_name, book_name;
+        cout << "Enter user name, book name: ";
+        cin >> user_name >> book_name;
+        for (int i = 0; i < user_num; i++)
+        {
+            if (user[i].name == user_name)
+            {
+                flag_user = true;
+                count_user = i;
+                break;
+            }
+        }
+        for (int i = 0; i < book_num; i++)
+        {
+            if (book[i].name == book_name)
+            {
+                flag_book = true;
+                count_book = i;
+                break;
+            }
+        }
+        if (flag_user && flag_book)
+        {
+            book[count_book].Return_Book(user_name);
+            user[count_user].Return_Book(book_name);
+        }
+        if (!flag_user)
+        {
+            cout <<"User not found\n";
+        }
+        if (!flag_book)
+        {
+            cout <<"book not found\n";
+        }
     }
     void Print_Who_Borrowed_Book_By_Name(void)
     {
-        
+        string book_name;
+        cout << "Enter book name: ";
+        cin >> book_name;
+        for (int i = 0; i < book_num; i++)
+        {
+            if (book[i].name != book_name)
+            {
+                continue;
+            }
+            cout << book[i].name << " : ";
+            for (int j = 0; j < book[i].borrowed; j++)
+            {
+                cout << book[i].borrow_name[j]<<" ";
+            }
+            cout <<endl;
+        }
     }
     void Menu(void)
     {
@@ -210,13 +305,51 @@ typedef struct sys{
                 if (choice < 1 || choice > 10)
                 {
                     cout <<"Not correct choice, try again\n\n";
-                }else
+                }
+                else if (choice == 1)
+                {
+                    Add_Book();
+                }
+                else if (choice == 2)
+                {
+                    Search_Book();
+                }
+                else if (choice == 3)
+                {
+                    List_By_Name();
+                }
+                else if (choice == 4)
+                {
+                    List_By_ID();
+                }
+                else if (choice == 5)
+                {
+                    List_By_Name();
+                }
+                else if (choice == 6)
+                {
+                    Add_User();
+                }
+                else if (choice == 7)
+                {
+                    User_Borrow_Book();
+                }
+                else if (choice == 8)
+                {
+                    User_Return_Book();
+                }
+                else if (choice == 9)
+                {
+                    Print_Users();
+                }
+                else
                 {
                     cout << "\n";
                     break;
                 }
             }
-
+            if (choice == 10)
+                break;
         }
     }
 }sys_st;
@@ -225,7 +358,7 @@ typedef struct sys{
 
 int main(void)
 {
-
+    sys().Menu();
     return 0;
 }
 
